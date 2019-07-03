@@ -151,6 +151,8 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-thumbnail')
+    implementation project(':react-native-image-crop-picker')
     implementation project(':@react-native-community_image-editor')
     implementation project(':react-native-video')
     implementation project(':react-native-gesture-handler')

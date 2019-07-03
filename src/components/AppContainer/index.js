@@ -3,11 +3,14 @@ import { View, Text, Button } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import CameraScreen from "../CameraScreen";
 import SquareImageCropper from "../SquareImageCropper";
-//import ImagePicker from "react-native-image-crop-picker";
+import VideoRecorder from "../VideoRecorder";
+import ViewRecording from "../VideoRecorder/ViewRecording";
+import RNCameraExample from "../RNCameraExample";
 
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
+    // console.disableYellowBox = true;
   }
   startCamera() {
     this.props.navigation.navigate("Camera", { type: "snap" });
@@ -17,6 +20,10 @@ class HomeScreen extends React.Component {
     this.props.navigation.navigate("Camera", { type: "video" });
   }
 
+  recordVideo() {
+    this.props.navigation.navigate("VideoRecorder");
+  }
+
   render() {
     return (
       <View
@@ -24,16 +31,21 @@ class HomeScreen extends React.Component {
           flex: 1,
           alignItems: "center",
           justifyContent: "space-evenly",
-          flexDirection: "row"
+          flexDirection: "column"
         }}
       >
         <Button title="Start Camera" onPress={() => this.startCamera()} />
         <Button title="Start Video" onPress={() => this.startVideo()} />
+        <Button title="Record Video" onPress={() => this.recordVideo()} />
         <Button
           title="Crop Example"
           onPress={() => {
             this.props.navigation.navigate("ImageCropper");
           }}
+        />
+        <Button
+          title="RNCamera Example"
+          onPress={() => this.props.navigation.navigate("RNCameraExample")}
         />
       </View>
     );
@@ -49,6 +61,15 @@ const AppNavigator = createStackNavigator({
   },
   Camera: {
     screen: CameraScreen
+  },
+  VideoRecorder: {
+    screen: VideoRecorder
+  },
+  ViewRecording: {
+    screen: ViewRecording
+  },
+  RNCameraExample: {
+    screen: RNCameraExample
   },
   initialRouteName: "Home"
 });

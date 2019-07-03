@@ -3,6 +3,8 @@ package com.testproject;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import me.hauvo.thumbnail.RNThumbnailPackage;
+import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.reactnativecommunity.imageeditor.ImageEditorPackage;
 import com.brentvatne.react.ReactVideoPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
@@ -28,6 +30,8 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNThumbnailPackage(),
+            new PickerPackage(),
             new ImageEditorPackage(),            
             new ReactVideoPackage(),
             new RNGestureHandlerPackage(),

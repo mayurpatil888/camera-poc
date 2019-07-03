@@ -46,6 +46,7 @@
 		67939B86D6AB4732A80CC5EF /* libRCTVideo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6C08B3B28D19471FA2E4264D /* libRCTVideo.a */; };
 		E8FA74991AD940F5A9037AC8 /* libimageCropPicker.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E635052896E043B1B1C6F246 /* libimageCropPicker.a */; };
 		AFA6BF11391C43EEAE3FDEC0 /* libRNCImageEditor.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 07D010F40E7741058D81286D /* libRNCImageEditor.a */; };
+		C3170B476EFA4ED8AC9D2DBB /* libRNThumbnail.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 923D431095D149B3ACB3AFE5 /* libRNThumbnail.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -366,6 +367,8 @@
 		E635052896E043B1B1C6F246 /* libimageCropPicker.a */ = {isa = PBXFileReference; name = "libimageCropPicker.a"; path = "libimageCropPicker.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		79D572670712463987A129FB /* RNCImageEditor.xcodeproj */ = {isa = PBXFileReference; name = "RNCImageEditor.xcodeproj"; path = "../node_modules/@react-native-community/image-editor/ios/RNCImageEditor.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		07D010F40E7741058D81286D /* libRNCImageEditor.a */ = {isa = PBXFileReference; name = "libRNCImageEditor.a"; path = "libRNCImageEditor.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		972E1774FC1E4A0792A5EAAB /* RNThumbnail.xcodeproj */ = {isa = PBXFileReference; name = "RNThumbnail.xcodeproj"; path = "../node_modules/react-native-thumbnail/ios/RNThumbnail.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		923D431095D149B3ACB3AFE5 /* libRNThumbnail.a */ = {isa = PBXFileReference; name = "libRNThumbnail.a"; path = "libRNThumbnail.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -400,6 +403,7 @@
 				67939B86D6AB4732A80CC5EF /* libRCTVideo.a in Frameworks */,
 				E8FA74991AD940F5A9037AC8 /* libimageCropPicker.a in Frameworks */,
 				AFA6BF11391C43EEAE3FDEC0 /* libRNCImageEditor.a in Frameworks */,
+				C3170B476EFA4ED8AC9D2DBB /* libRNThumbnail.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +600,7 @@
 				99468284A7EC485D8B8A0ACA /* RCTVideo.xcodeproj */,
 				7AA18CD1492C477E9347CEE5 /* imageCropPicker.xcodeproj */,
 				79D572670712463987A129FB /* RNCImageEditor.xcodeproj */,
+				972E1774FC1E4A0792A5EAAB /* RNThumbnail.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -1230,6 +1235,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1239,6 +1245,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Debug;
@@ -1267,6 +1274,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1276,6 +1284,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Release;
@@ -1304,6 +1313,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Debug;
@@ -1331,6 +1341,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Release;
@@ -1367,6 +1378,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1376,6 +1388,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Debug;
@@ -1412,6 +1425,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1421,6 +1435,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Release;
@@ -1456,6 +1471,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1465,6 +1481,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Debug;
@@ -1500,6 +1517,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1509,6 +1527,7 @@
 					"$(SRCROOT)/../node_modules/react-native-video/ios/**",
 					"$(SRCROOT)/../node_modules/react-native-image-crop-picker/ios/**",
 					"$(SRCROOT)/../node_modules/@react-native-community/image-editor/ios",
+					"$(SRCROOT)/../node_modules/react-native-thumbnail/ios",
 				);
 			};
 			name = Release;
