@@ -21,7 +21,7 @@ import {
 
 import ImageEditor from "@react-native-community/image-editor";
 
-const DEFAULT_IMAGE_HEIGHT = 600;
+const DEFAULT_IMAGE_HEIGHT = 1000;
 const DEFAULT_IMAGE_WIDTH = 1000;
 
 export default class SquareImageCropper extends React.Component {
@@ -46,7 +46,7 @@ export default class SquareImageCropper extends React.Component {
   async _fetchRandomPhoto() {
     this.setState({
       randomPhoto: {
-        uri: `https://dummyimage.com/1000x600/000/0011ff&text=This+is+the+dummy+image+to+test+cropping+`,
+        uri: `https://dummyimage.com/1000x1000/000/fff`,
         height: DEFAULT_IMAGE_HEIGHT,
         width: DEFAULT_IMAGE_WIDTH
       }
@@ -147,8 +147,7 @@ export default class SquareImageCropper extends React.Component {
         this._transformData
       );
       console.log(
-        "------------------------------ cropperImageURI ------------------------------ ",
-        croppedImageURI
+        "--------------------- cropperImageURI ------------------------------ "
       );
       if (croppedImageURI) {
         this.setState({ croppedImageURI });
@@ -252,29 +251,33 @@ class ImageCropper extends React.Component {
   render() {
     console.log("Image in scrollview ", this.props.image);
     return (
-      <ScrollView
-        alwaysBounceVertical={true}
-        automaticallyAdjustContentInsets={false}
-        contentOffset={this._contentOffset}
-        decelerationRate="fast"
-        horizontal={this._horizontal}
-        maximumZoomScale={this._maximumZoomScale}
-        minimumZoomScale={this._minimumZoomScale}
-        //onMomentumScrollEnd={this._onScroll.bind(this)}
-        //onScrollEndDrag={this._onScroll.bind(this)}
-        onScroll={event => {
-          this._onScroll(event);
-        }}
-        showsHorizontalScrollIndicator={false}
-        showsVerticalScrollIndicator={false}
-        style={this.props.style}
-        scrollEventThrottle={16}
-      >
-        <Image
-          testID={"testImage"}
-          source={{ uri: this.props.image.uri }}
-          style={this._scaledImageSize}
-        />
+      <ScrollView nestedScrollEnabled={true}>
+        <ScrollView
+          nestedScrollEnabled={true}
+          alwaysBounceVertical={true}
+          automaticallyAdjustContentInsets={false}
+          contentOffset={this._contentOffset}
+          decelerationRate="fast"
+          horizontal={this._horizontal}
+          maximumZoomScale={this._maximumZoomScale}
+          minimumZoomScale={this._minimumZoomScale}
+          directionalLockEnabled={false}
+          //onMomentumScrollEnd={this._onScroll.bind(this)}
+          //onScrollEndDrag={this._onScroll.bind(this)}
+          onScroll={event => {
+            this._onScroll(event);
+          }}
+          showsHorizontalScrollIndicator={false}
+          showsVerticalScrollIndicator={false}
+          style={this.props.style}
+          scrollEventThrottle={16}
+        >
+          <Image
+            testID={"testImage"}
+            source={{ uri: this.props.image.uri }}
+            style={this._scaledImageSize}
+          />
+        </ScrollView>
       </ScrollView>
     );
   }
