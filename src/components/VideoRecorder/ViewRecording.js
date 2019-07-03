@@ -1,31 +1,70 @@
 //import liraries
-import React, { Component } from "react";
-import { View, Text, StyleSheet, Image } from "react-native";
+import React, { PureComponent } from "react";
+import { View, Text, StyleSheet, Image, Button } from "react-native";
 import Video from "react-native-video";
 
+import ProgressBar from "react-native-progress/Bar";
+
+const PROGRESS_FACTOR = 0.01;
+
 // create a component
-const ViewRecording = props => {
-  return (
-    <View style={styles.container}>
-      <Video
-        source={{ uri: props.navigation.getParam("uri") }} // Can be a URL or a local file.
-        ref={ref => {
-          this.player = ref;
-        }} // Store reference
-        // onBuffer={this.onBuffer} // Callback when remote video is buffering
-        // onError={this.videoError} // Callback when video cannot be loaded
-        style={styles.backgroundVideo}
-      />
-      <View style={{ flex: 0.5 }}>
-        <Text>Thumbnail</Text>
-        <Image
-          style={{ flex: 1 }}
-          source={{ uri: props.navigation.getParam("thumbnail") }}
+class ViewRecording extends PureComponent {
+  constructor(props) {
+    super(props);
+    this.state = {
+      pauseVideo: false,
+      progress: 0
+    };
+    this.durationInMsec = 300;
+  }
+
+  onVideoLoad = data => {
+    this.durationInMsec = (data.duration * 1000) / 100;
+    this.progressInterval = setInterval(() => {
+      if (this.state.progress < 1) {
+        this.setState({ progress: this.state.progress + PROGRESS_FACTOR });
+      } else {
+        clearInterval(this.progressInterval);
+      }
+    }, this.durationInMsec);
+  };
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Button
+          title="Play/Pause"
+          onPress={() => this.setState({ pauseVideo: !this.state.pauseVideo })}
         />
+        <ProgressBar
+          width={null}
+          color="#f2bff1"
+          progress={this.state.progress}
+          indeterminate={false}
+          style={styles.progressBar}
+        />
+        <Video
+          source={{ uri: this.props.navigation.getParam("uri") }} // Can be a URL or a local file.
+          ref={ref => {
+            this.player = ref;
+          }} // Store reference
+          // onBuffer={this.onBuffer} // Callback when remote video is buffering
+          // onError={this.videoError} // Callback when video cannot be loaded
+          style={styles.backgroundVideo}
+          paused={this.state.pauseVideo}
+          onLoad={this.onVideoLoad}
+        />
+        <View style={{ flex: 0.5 }}>
+          <Text>Thumbnail</Text>
+          <Image
+            style={{ flex: 1 }}
+            source={{ uri: this.props.navigation.getParam("thumbnail") }}
+          />
+        </View>
       </View>
-    </View>
-  );
-};
+    );
+  }
+}
 
 // define your styles
 const styles = StyleSheet.create({
@@ -41,6 +80,12 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 0,
     margin: 0
+  },
+  progressBar: {
+    borderRadius: 0,
+    borderColor: "#fff",
+    borderWidth: 0.5,
+    height: 3
   }
 });
 

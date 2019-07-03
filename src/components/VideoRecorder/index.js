@@ -1,13 +1,5 @@
-"use strict";
-import React, { PureComponent } from "react";
-import {
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-  View,
-  Image,
-  ProgressBarAndroid
-} from "react-native";
+import React, { Component } from "react";
+import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { RNCamera } from "react-native-camera";
 import cameraIcon from "../../assets/camera.png";
 import ProgressBar from "react-native-progress/Bar";
@@ -15,12 +7,11 @@ import RNThumbnail from "react-native-thumbnail";
 
 const PROGRESS_FACTOR = 0.01;
 
-// create a component
-class VideoRecorder extends PureComponent {
+class VideoRecorder extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      hasCameraPermission: null,
+      //   hasCameraPermission: true,//to explore
       type: RNCamera.Constants.Type.front,
       progress: 0
     };
@@ -43,12 +34,20 @@ class VideoRecorder extends PureComponent {
     navigation.addListener("willFocus", () =>
       this.setState({ focusedScreen: true, progress: 0 })
     );
-    navigation.addListener("willBlur", () =>
-      this.setState({ focusedScreen: false })
-    );
+    navigation.addListener("willBlur", () => {
+      this.setState({ focusedScreen: false });
+      this.cleanUp();
+    });
   }
 
-  componentWillUnmount() {}
+  componentWillUnmount() {
+    this.cleanUp();
+  }
+
+  cleanUp() {
+    this.camera = null;
+    clearInterval(this.progressInterval);
+  }
 
   cameraView() {
     return (
@@ -58,12 +57,7 @@ class VideoRecorder extends PureComponent {
           color="#f2bff1"
           progress={this.state.progress}
           indeterminate={false}
-          style={{
-            borderRadius: 0,
-            border: 1,
-            borderColor: "#fff",
-            borderWidth: 0.5
-          }}
+          style={styles.progressBar}
         />
         <RNCamera
           ref={ref => {
@@ -82,9 +76,6 @@ class VideoRecorder extends PureComponent {
             message: "We need your permission to use your audio",
             buttonPositive: "Ok",
             buttonNegative: "Cancel"
-          }}
-          onGoogleVisionBarcodesDetected={({ barcodes }) => {
-            console.log(barcodes);
           }}
         >
           {({ camera, status, recordAudioPermissionStatus }) => {
@@ -106,7 +97,7 @@ class VideoRecorder extends PureComponent {
                 <View
                   style={{
                     flex: 0,
-                    flexDirection: "row",
+                    flexDirection: "column",
                     justifyContent: "center"
                   }}
                 >
@@ -134,20 +125,24 @@ class VideoRecorder extends PureComponent {
     }
   }
 
-  recordVideoAsync = async () => {
-    if (this.camera && !this.isRecording) {
-      this.isRecording = true;
-      const options = { quality: 0.5, base64: true, maxDuration: 30 };
-      this.progressInterval = setInterval(() => {
-        if (this.state.progress < 1) {
-          this.setState({ progress: this.state.progress + PROGRESS_FACTOR });
-        } else {
-          this.isRecording = false;
-          clearInterval(this.progressInterval);
-          this.camera.stopRecording();
-        }
-      }, 300);
-      const data = await this.camera.recordAsync(options);
+  initProgressBar() {
+    this.progressInterval = setInterval(() => {
+      if (this.state.progress < 1) {
+        this.setState({ progress: this.state.progress + PROGRESS_FACTOR });
+      } else {
+        this.stopRecording();
+      }
+    }, 300);
+  }
+
+  stopRecording = () => {
+    this.isRecording = false;
+    clearInterval(this.progressInterval);
+    this.camera && this.camera.stopRecording();
+  };
+
+  navigateToViewRecording = data => {
+    if (this.state.focusedScreen && data) {
       console.log(data.uri);
       RNThumbnail.get(data.uri).then(result => {
         console.log(result.path); // thumbnail path
@@ -156,6 +151,19 @@ class VideoRecorder extends PureComponent {
           thumbnail: result.path
         });
       });
+    }
+  };
+
+  recordVideoAsync = async () => {
+    if (!this.camera) return;
+    if (!this.isRecording) {
+      this.isRecording = true;
+      const options = { quality: 0.5, base64: true, maxDuration: 30 };
+      this.initProgressBar();
+      const data = await this.camera.recordAsync(options);
+      this.navigateToViewRecording(data);
+    } else {
+      this.stopRecording();
     }
   };
 }
@@ -191,6 +199,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
     alignSelf: "center",
     margin: 20
+  },
+  progressBar: {
+    borderRadius: 0,
+    borderColor: "#fff",
+    borderWidth: 0.5,
+    height: 3
   }
 });
 
