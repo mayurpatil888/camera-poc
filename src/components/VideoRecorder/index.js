@@ -13,7 +13,7 @@ import cameraIcon from "../../assets/camera.png";
 import ProgressBar from "react-native-progress/Bar";
 import RNThumbnail from "react-native-thumbnail";
 
-const PROGRESS_FACTOR = 0.1;
+const PROGRESS_FACTOR = 0.01;
 
 // create a component
 class VideoRecorder extends PureComponent {
@@ -137,7 +137,7 @@ class VideoRecorder extends PureComponent {
   recordVideoAsync = async () => {
     if (this.camera && !this.isRecording) {
       this.isRecording = true;
-      const options = { quality: 0.5, base64: true };
+      const options = { quality: 0.5, base64: true, maxDuration: 30 };
       this.progressInterval = setInterval(() => {
         if (this.state.progress < 1) {
           this.setState({ progress: this.state.progress + PROGRESS_FACTOR });
@@ -146,7 +146,7 @@ class VideoRecorder extends PureComponent {
           clearInterval(this.progressInterval);
           this.camera.stopRecording();
         }
-      }, 3000);
+      }, 300);
       const data = await this.camera.recordAsync(options);
       console.log(data.uri);
       RNThumbnail.get(data.uri).then(result => {
