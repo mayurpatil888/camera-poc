@@ -9,6 +9,9 @@ const PROGRESS_FACTOR = 0.01;
 
 // create a component
 class ViewRecording extends PureComponent {
+  static navigationOptions = {
+    header: null
+  };
   constructor(props) {
     super(props);
     this.state = {
