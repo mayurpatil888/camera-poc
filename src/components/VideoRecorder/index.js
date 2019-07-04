@@ -8,9 +8,9 @@ import RNThumbnail from "react-native-thumbnail";
 const PROGRESS_FACTOR = 0.01;
 
 class VideoRecorder extends Component {
-  static navigationOptions = {
-    header: null
-  };
+  // static navigationOptions = {
+  //   header: null
+  // };
   constructor(props) {
     super(props);
     this.state = {
@@ -68,6 +68,7 @@ class VideoRecorder extends Component {
           }}
           style={styles.preview}
           type={this.state.type}
+          ratio="16:9"
           androidCameraPermissionOptions={{
             title: "Permission to use camera",
             message: "We need your permission to use your camera",
