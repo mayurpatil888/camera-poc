@@ -31,18 +31,18 @@ class HomeScreen extends React.Component {
           flex: 1,
           alignItems: "center",
           justifyContent: "space-evenly",
-          flexDirection: "column"
+          flexDirection: "row"
         }}
       >
-        <Button title="Start Camera" onPress={() => this.startCamera()} />
-        <Button title="Start Video" onPress={() => this.startVideo()} />
+        {/* <Button title="Start Camera" onPress={() => this.startCamera()} /> */}
+        {/* <Button title="Start Video" onPress={() => this.startVideo()} /> */}
         <Button title="Record Video" onPress={() => this.recordVideo()} />
-        <Button
+        {/* <Button
           title="Crop Example"
           onPress={() => {
             this.props.navigation.navigate("ImageCropper");
           }}
-        />
+        /> */}
         <Button
           title="RNCamera Example"
           onPress={() => this.props.navigation.navigate("RNCameraExample")}

@@ -174,24 +174,24 @@ class VideoRecorder extends Component {
 
     formData.append(
       "key",
-      "d/ua/profile-images/cbdf5846838b3de831b39d61f8742052-original.mp4"
+      "d/ua/profile-images/120-7ac299b228c236b17dccd9d4ca8dd10d-original.mp4"
     );
     formData.append("bucket", "uassets.stagingpepo.com");
     formData.append("X-Amz-Algorithm", "AWS4-HMAC-SHA256");
     formData.append(
       "X-Amz-Credential",
-      "AKIAT7WAUYD3XA7WRZV4/20190703/us-east-1/s3/aws4_request"
+      "AKIAT7WAUYD3XA7WRZV4/20190704/us-east-1/s3/aws4_request"
     );
-    formData.append("X-Amz-Date", "20190703T072653Z");
+    formData.append("X-Amz-Date", "20190704T073344Z");
 
     formData.append(
       "Policy",
-      "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0wNFQwNzoyNjo1M1oiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy9jYmRmNTg0NjgzOGIzZGU4MzFiMzlkNjFmODc0MjA1Mi1vcmlnaW5hbC5tcDQifSx7IkNhY2hlLUNvbnRyb2wiOiJwdWJsaWMsIG1heC1hZ2U9MzE1MzYwMDAwIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMTAyNCw4Mzg4NjA4MF0seyJrZXkiOiJkL3VhL3Byb2ZpbGUtaW1hZ2VzL2NiZGY1ODQ2ODM4YjNkZTgzMWIzOWQ2MWY4NzQyMDUyLW9yaWdpbmFsLm1wNCJ9LHsiYnVja2V0IjoidWFzc2V0cy5zdGFnaW5ncGVwby5jb20ifSx7IlgtQW16LUFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IlgtQW16LUNyZWRlbnRpYWwiOiJBS0lBVDdXQVVZRDNYQTdXUlpWNC8yMDE5MDcwMy91cy1lYXN0LTEvczMvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1EYXRlIjoiMjAxOTA3MDNUMDcyNjUzWiJ9XX0="
+      "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0wOVQwNzozMzo0NFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJDYWNoZS1Db250cm9sIjoicHVibGljLCBtYXgtYWdlPTMxNTM2MDAwMCJ9LHsieC1hbXotYWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDEwMjQsODM4ODYwODBdLHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiWC1BbXotQWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LHsiWC1BbXotQ3JlZGVudGlhbCI6IkFLSUFUN1dBVVlEM1hBN1dSWlY0LzIwMTkwNzA0L3VzLWVhc3QtMS9zMy9hd3M0X3JlcXVlc3QifSx7IlgtQW16LURhdGUiOiIyMDE5MDcwNFQwNzMzNDRaIn1dfQ=="
     );
 
     formData.append(
       "X-Amz-Signature",
-      "a60d4af7b085523f952cefa47ec11e78f1bdfc6bda7ee4ee9cca677bcb37f4dc"
+      "705e9161fb3278e0123a66281392ae5c0a94465a0dbf70b5a4c5b8ef49b72e6c"
     );
     formData.append("Content-Type", "video/mp4");
     formData.append("Cache-Control", "public, max-age=315360000");
