@@ -128,7 +128,8 @@ class VideoRecorder extends Component {
     }
   }
 
-  async uploadToS3(file) {
+  async uploadToS3(file, data) {
+    const oThis = this;
     // from http://blog.rudikovac.com/react-native-upload-any-file-to-s3-with-a-presigned-url/
     const xhr = new XMLHttpRequest();
     let formData = new FormData();
@@ -142,6 +143,7 @@ class VideoRecorder extends Component {
       if (xhr.readyState === 4) {
         if (xhr.status === 204) {
           alert("Video uploaded successfully to S3");
+          oThis.navigateToViewRecording(data);
         } else {
           alert("Could not upload file.");
         }
@@ -229,13 +231,23 @@ class VideoRecorder extends Component {
   navigateToViewRecording = data => {
     if (this.state.focusedScreen && data) {
       console.log(data.uri);
-      RNThumbnail.get(data.uri).then(result => {
-        console.log(result.path); // thumbnail path
-        this.props.navigation.navigate("ViewRecording", {
-          uri: data.uri,
-          thumbnail: result.path
-        });
+      console.log("I am hereee");
+      this.props.navigation.navigate("ViewRecording", {
+        uri: data.uri
+        //thumbnail: result.path
       });
+      // RNThumbnail.get(data.uri)
+      //   .then(result => {
+      //     console.log(result.path); // thumbnail path
+      //     console.log("I am hereee in RNThumbnail");
+      //     this.props.navigation.navigate("ViewRecording", {
+      //       uri: data.uri,
+      //       thumbnail: result.path
+      //     });
+      //   })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     }
   };
 
@@ -250,12 +262,14 @@ class VideoRecorder extends Component {
       };
       this.initProgressBar();
       const data = await this.camera.recordAsync(options);
-      this.uploadToS3({
-        uri: data.uri,
-        type: "video/mp4",
-        name: "video.mp4"
-      });
-      //this.navigateToViewRecording(data);
+      this.uploadToS3(
+        {
+          uri: data.uri,
+          type: "video/mp4",
+          name: "video.mp4"
+        },
+        data
+      );
     } else {
       this.stopRecording();
     }

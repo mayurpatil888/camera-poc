@@ -57,13 +57,13 @@ class ViewRecording extends PureComponent {
           paused={this.state.pauseVideo}
           onLoad={this.onVideoLoad}
         />
-        <View style={{ flex: 0.5 }}>
+        {/* <View style={{ flex: 0.5 }}>
           <Text>Thumbnail</Text>
           <Image
             style={{ flex: 1 }}
             source={{ uri: this.props.navigation.getParam("thumbnail") }}
           />
-        </View>
+        </View> */}
       </View>
     );
   }
@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     margin: 0
   },
   backgroundVideo: {
-    flex: 0.5,
+    flex: 1,
     left: 0,
     right: 0,
     padding: 0,
