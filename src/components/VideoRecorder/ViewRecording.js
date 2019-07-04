@@ -32,13 +32,13 @@ class ViewRecording extends PureComponent {
   render() {
     return (
       <View style={styles.container}>
-        <Button
+        {/* <Button
           title="Play/Pause"
           onPress={() => this.setState({ pauseVideo: !this.state.pauseVideo })}
-        />
+        /> */}
         <ProgressBar
           width={null}
-          color="#f2bff1"
+          color="#ff3b30"
           progress={this.state.progress}
           indeterminate={false}
           style={styles.progressBar}
@@ -82,10 +82,12 @@ const styles = StyleSheet.create({
     margin: 0
   },
   progressBar: {
-    borderRadius: 0,
+    borderRadius: 3.5,
     borderColor: "#fff",
     borderWidth: 0.5,
-    height: 3
+    height: 7,
+    marginLeft: 10,
+    marginRight: 10
   }
 });
 
