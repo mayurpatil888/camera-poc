@@ -288,8 +288,9 @@ class VideoRecorder extends Component {
     // RNFFmpeg.execute(
     //   `-s 720X1280 -pix_fmt yuv420p -i ${uri} -vcodec h264  -crf 24 file:///data/user/0/com.testproject/cache/Camera/output${Date.now()}.mp4`
     // )
+    let currentTime = Date.now();
     RNFFmpeg.execute(
-      `-i ${uri} -c:v libx265 -crf 24 file:///data/user/0/com.testproject/cache/Camera/output_${Date.now()}.mp4`
+      `-i ${uri} -s 720X1280 -pix_fmt yuv420p -vcodec h264 file:///data/user/0/com.testproject/cache/Camera/output_${currentTime}.mp4`
     )
       .then(result => {
         console.log(
@@ -302,7 +303,7 @@ class VideoRecorder extends Component {
         );
 
         this.uploadToS3({
-          uri: `file:///data/user/0/com.testproject/cache/Camera/output_${Date.now()}.mp4`,
+          uri: `file:///data/user/0/com.testproject/cache/Camera/output_${currentTime}.mp4`,
           type: "video/mp4",
           name: "video.mp4"
         });

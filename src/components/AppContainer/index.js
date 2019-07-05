@@ -2,7 +2,6 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import CameraScreen from "../CameraScreen";
-import SquareImageCropper from "../SquareImageCropper";
 import VideoRecorder from "../VideoRecorder";
 import ViewRecording from "../VideoRecorder/ViewRecording";
 import RNCameraExample from "../RNCameraExample";
@@ -55,9 +54,6 @@ class HomeScreen extends React.Component {
 const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen
-  },
-  ImageCropper: {
-    screen: SquareImageCropper
   },
   Camera: {
     screen: CameraScreen
