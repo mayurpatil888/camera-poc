@@ -3,6 +3,7 @@ package com.testproject;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.arthenica.reactnative.RNFFmpegPackage;
 import me.hauvo.thumbnail.RNThumbnailPackage;
 import com.reactnative.ivpusic.imagepicker.PickerPackage;
 import com.reactnativecommunity.imageeditor.ImageEditorPackage;
@@ -30,6 +31,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new RNFFmpegPackage(),
             new RNThumbnailPackage(),
             new PickerPackage(),
             new ImageEditorPackage(),            

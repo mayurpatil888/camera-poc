@@ -101,6 +101,10 @@ android {
         targetCompatibility JavaVersion.VERSION_1_8
     }
 
+    packagingOptions {
+           pickFirst '**/libc++_shared.so'
+    }
+
     defaultConfig {
         applicationId "com.testproject"
         minSdkVersion rootProject.ext.minSdkVersion
@@ -151,6 +155,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-ffmpeg')
     implementation project(':react-native-thumbnail')
     implementation project(':react-native-image-crop-picker')
     implementation project(':@react-native-community_image-editor')

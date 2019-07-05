@@ -4,6 +4,7 @@ import { RNCamera } from "react-native-camera";
 import cameraIcon from "../../assets/camera.png";
 import ProgressBar from "react-native-progress/Bar";
 import RNThumbnail from "react-native-thumbnail";
+import { RNFFmpeg } from "react-native-ffmpeg";
 
 const PROGRESS_FACTOR = 0.01;
 
@@ -69,6 +70,9 @@ class VideoRecorder extends Component {
           style={styles.preview}
           type={this.state.type}
           ratio="16:9"
+          zoom={0}
+          //autoFocusPointOfInterest={{ x: 0.5, y: 0.5 }}
+          //videoStabilizationMode={RNCamera.Constants.VideoStabilization["auto"]}
           androidCameraPermissionOptions={{
             title: "Permission to use camera",
             message: "We need your permission to use your camera",
@@ -257,24 +261,62 @@ class VideoRecorder extends Component {
     if (!this.isRecording) {
       this.isRecording = true;
       const options = {
-        quality: RNCamera.Constants.VideoQuality["288p"],
+        quality: RNCamera.Constants.VideoQuality["1080p"],
         base64: true,
         maxDuration: 30
+        //codec: RNCamera.Constants.VideoCodec["H264"],
+        //orientation: "portrait"
       };
       this.initProgressBar();
       const data = await this.camera.recordAsync(options);
-      this.uploadToS3(
-        {
-          uri: data.uri,
-          type: "video/mp4",
-          name: "video.mp4"
-        },
-        data
-      );
+
+      this.ffmgTest(data.uri);
+      // this.uploadToS3(
+      //   {
+      //     uri: data.uri,
+      //     type: "video/mp4",
+      //     name: "video.mp4"
+      //   },
+      //   data
+      // );
     } else {
       this.stopRecording();
     }
   };
+
+  ffmgTest(uri) {
+    // RNFFmpeg.execute(
+    //   `-s 720X1280 -pix_fmt yuv420p -i ${uri} -vcodec h264  -crf 24 file:///data/user/0/com.testproject/cache/Camera/output${Date.now()}.mp4`
+    // )
+    RNFFmpeg.execute(
+      `-i ${uri} -c:v libx265 -crf 24 file:///data/user/0/com.testproject/cache/Camera/output_${Date.now()}.mp4`
+    )
+      .then(result => {
+        console.log(
+          "-----------============================-------------result-------------============================"
+        );
+        console.log(result);
+        console.log(result.rc);
+        console.log(
+          "-----------============================-------------result-------------============================"
+        );
+
+        this.uploadToS3({
+          uri: `file:///data/user/0/com.testproject/cache/Camera/output_${Date.now()}.mp4`,
+          type: "video/mp4",
+          name: "video.mp4"
+        });
+
+        console.log("-------------result-------------");
+      })
+      .catch(err => {
+        console.log("I n error", err);
+      });
+
+    // RNFFmpeg.getMediaInformation(uri).then(info => {
+    //   console.log("Result: " + JSON.stringify(info));
+    // });
+  }
 }
 
 const styles = StyleSheet.create({
