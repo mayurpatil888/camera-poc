@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
+import { StyleSheet, TouchableOpacity, View, Image, Text } from "react-native";
 import { RNCamera } from "react-native-camera";
 import cameraIcon from "../../assets/camera.png";
 import ProgressBar from "react-native-progress/Bar";
@@ -69,6 +69,21 @@ class VideoRecorder extends Component {
           style={styles.preview}
           type={this.state.type}
           ratio="16:9"
+          zoom={0}
+          autoFocusPointOfInterest={{ x: 0.5, y: 0.5 }}
+          videoStabilizationMode={RNCamera.Constants.VideoStabilization["auto"]}
+          notAuthorizedView={
+            <View>
+              <Text>The camera is not authorized!</Text>
+            </View>
+          }
+          pendingAuthorizationView={
+            <View>
+              <Text>The camera is pending authorization!</Text>
+            </View>
+          }
+          defaultVideoQuality={RNCamera.Constants.VideoQuality["480p"]}
+          defaultMuted={false}
           androidCameraPermissionOptions={{
             title: "Permission to use camera",
             message: "We need your permission to use your camera",
@@ -82,39 +97,34 @@ class VideoRecorder extends Component {
             buttonNegative: "Cancel"
           }}
         >
-          {({ camera, status, recordAudioPermissionStatus }) => {
-            if (status !== "READY") return <View />;
-            return (
-              <View
-                style={{
-                  flex: 0,
-                  flexDirection: "row",
-                  justifyContent: "center"
-                }}
+          <View
+            style={{
+              flex: 0,
+              flexDirection: "row",
+              justifyContent: "center"
+            }}
+          >
+            <View>
+              <TouchableOpacity
+                onPress={this.recordVideoAsync}
+                style={styles.capture}
+              />
+            </View>
+            <View
+              style={{
+                flex: 0,
+                flexDirection: "column",
+                justifyContent: "center"
+              }}
+            >
+              <TouchableOpacity
+                style={styles.flipButton}
+                onPress={this.toggleFacing}
               >
-                <View>
-                  <TouchableOpacity
-                    onPress={this.recordVideoAsync}
-                    style={styles.capture}
-                  />
-                </View>
-                <View
-                  style={{
-                    flex: 0,
-                    flexDirection: "column",
-                    justifyContent: "center"
-                  }}
-                >
-                  <TouchableOpacity
-                    style={styles.flipButton}
-                    onPress={this.toggleFacing}
-                  >
-                    <Image style={styles.cameraType} source={cameraIcon} />
-                  </TouchableOpacity>
-                </View>
-              </View>
-            );
-          }}
+                <Image style={styles.cameraType} source={cameraIcon} />
+              </TouchableOpacity>
+            </View>
+          </View>
         </RNCamera>
       </View>
     );
@@ -140,7 +150,7 @@ class VideoRecorder extends Component {
 
     xhr.open("POST", presignedurl);
     xhr.onreadystatechange = function() {
-      console.log("I am her xhr.statuse", xhr.status, xhr.responseText);
+      console.log("I am in xhr.statuse", xhr.status, xhr.responseText);
       if (xhr.readyState === 4) {
         if (xhr.status === 204) {
           alert("Video uploaded successfully to S3");
@@ -232,7 +242,6 @@ class VideoRecorder extends Component {
   navigateToViewRecording = data => {
     if (this.state.focusedScreen && data) {
       console.log(data.uri);
-      console.log("I am hereee");
       this.props.navigation.navigate("ViewRecording", {
         uri: data.uri
         //thumbnail: result.path
@@ -257,9 +266,12 @@ class VideoRecorder extends Component {
     if (!this.isRecording) {
       this.isRecording = true;
       const options = {
-        quality: RNCamera.Constants.VideoQuality["288p"],
+        quality: RNCamera.Constants.VideoQuality["480p"],
         base64: true,
-        maxDuration: 30
+        maxDuration: 30,
+        muted: false,
+        codec: RNCamera.Constants.VideoCodec["H264"],
+        orientation: "portrait"
       };
       this.initProgressBar();
       const data = await this.camera.recordAsync(options);
