@@ -69,7 +69,7 @@ class ViewRecording extends PureComponent {
       this.state.screenSize
     } -pix_fmt ${this.state.pixelFormat} -vcodec h264 -crf ${
       this.state.crf
-    } file:///data/user/0/com.testproject/cache/Camera/output_${compreessionStarted}.mp4`;
+    } -preset ultrafast file:///data/user/0/com.testproject/cache/Camera/output_${compreessionStarted}.mp4`;
     console.log(executeStr, "executeStrexecuteStrexecuteStr");
 
     console.log("Compression has started at", compreessionStarted);
