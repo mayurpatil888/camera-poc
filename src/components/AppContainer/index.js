@@ -2,10 +2,10 @@ import React from "react";
 import { View, Text, Button } from "react-native";
 import { createStackNavigator, createAppContainer } from "react-navigation";
 import CameraScreen from "../CameraScreen";
-import SquareImageCropper from "../SquareImageCropper";
 import VideoRecorder from "../VideoRecorder";
 import ViewRecording from "../VideoRecorder/ViewRecording";
 import RNCameraExample from "../RNCameraExample";
+import ViewRecordingWithStats from "../VideoRecorder/ViewRecordingWithStats";
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -43,10 +43,10 @@ class HomeScreen extends React.Component {
             this.props.navigation.navigate("ImageCropper");
           }}
         /> */}
-        <Button
+        {/* <Button
           title="RNCamera Example"
           onPress={() => this.props.navigation.navigate("RNCameraExample")}
-        />
+        /> */}
       </View>
     );
   }
@@ -56,9 +56,6 @@ const AppNavigator = createStackNavigator({
   Home: {
     screen: HomeScreen
   },
-  ImageCropper: {
-    screen: SquareImageCropper
-  },
   Camera: {
     screen: CameraScreen
   },
@@ -67,6 +64,9 @@ const AppNavigator = createStackNavigator({
   },
   ViewRecording: {
     screen: ViewRecording
+  },
+  ViewRecordingWithStats: {
+    screen: ViewRecordingWithStats
   },
   RNCameraExample: {
     screen: RNCameraExample
