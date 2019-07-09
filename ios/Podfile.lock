@@ -6,14 +6,11 @@ PODS:
     - DoubleConversion
     - glog
   - glog (0.3.5)
-  - mobile-ffmpeg-https (4.2.2)
+  - mobile-ffmpeg-min-gpl (4.2.2.LTS)
   - React (0.59.9):
     - React/Core (= 0.59.9)
-  - react-native-ffmpeg (0.3.4):
-    - React
-    - react-native-ffmpeg/https (= 0.3.4)
-  - react-native-ffmpeg/https (0.3.4):
-    - mobile-ffmpeg-https (= 4.2.2)
+  - react-native-ffmpeg/min-gpl-lts (0.3.4):
+    - mobile-ffmpeg-min-gpl (= 4.2.2.LTS)
     - React
   - React/Core (0.59.9):
     - yoga (= 0.59.9.React)
@@ -70,7 +67,7 @@ DEPENDENCIES:
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - Folly (from `../node_modules/react-native/third-party-podspecs/Folly.podspec`)
   - glog (from `../node_modules/react-native/third-party-podspecs/glog.podspec`)
-  - react-native-ffmpeg (from `../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg.podspec`)
+  - react-native-ffmpeg/min-gpl-lts (from `../node_modules/react-native-ffmpeg/ios/react-native-ffmpeg.podspec`)
   - React/Core (from `../node_modules/react-native`)
   - React/CxxBridge (from `../node_modules/react-native`)
   - React/cxxreact (from `../node_modules/react-native`)
@@ -88,7 +85,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
     - boost-for-react-native
-    - mobile-ffmpeg-https
+    - mobile-ffmpeg-min-gpl
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -113,13 +110,13 @@ SPEC CHECKSUMS:
   DoubleConversion: bb338842f62ab1d708ceb63ec3d999f0f3d98ecd
   Folly: de497beb10f102453a1afa9edbf8cf8a251890de
   glog: aefd1eb5dda2ab95ba0938556f34b98e2da3a60d
-  mobile-ffmpeg-https: 9474e6e0958b6c12d981073d81a3b9484da02f48
+  mobile-ffmpeg-min-gpl: f59b5fbd75ed9a6c8690dd271f50db44d3b5733c
   React: a86b92f00edbe1873a63e4a212c29b7a7ad5224f
   react-native-ffmpeg: b8b4d50a30bc6f8b6893a92a06bb14b4a6e21212
   rn-fetch-blob: 766f85cabd2992300dfa1be2bc9e4e258abc6f04
   RNFS: c9bbde46b0d59619f8e7b735991c60e0f73d22c1
   yoga: 03ff42a6f223fb88deeaed60249020d80c3091ee
 
-PODFILE CHECKSUM: 81ed5ff5c3826753074e4e6aadf8ec6e9ba5a922
+PODFILE CHECKSUM: dc2b6ba6836eeaddfa8b21f570afc23784d3f51c
 
 COCOAPODS: 1.7.3

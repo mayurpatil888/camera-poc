@@ -84,7 +84,9 @@ class ViewRecording extends PureComponent {
 
     let executeStr = `-i ${this.props.navigation.getParam("inputUri")} -s ${
       this.state.screenSize
-    } -pix_fmt ${this.state.pixelFormat} -vcodec h264 ${outputPath}`;
+    } -crf ${this.state.crf} -preset ${this.state.preset} -pix_fmt ${
+      this.state.pixelFormat
+    } -vcodec h264 ${outputPath}`;
 
     console.log(executeStr, "executeStrexecuteStrexecuteStr");
 
@@ -334,7 +336,7 @@ class ViewRecording extends PureComponent {
                 value={this.state.pixelFormat}
               />
 
-              {/* <Picker
+              <Picker
                 selectedValue={this.state.preset}
                 style={{ height: 50, width: 100 }}
                 onValueChange={(itemValue, itemIndex) =>
@@ -350,7 +352,7 @@ class ViewRecording extends PureComponent {
                 <Picker.Item label="slow" value="slow" />
                 <Picker.Item label="slower" value="slower" />
                 <Picker.Item label="Superfast" value="superfast" />
-              </Picker> */}
+              </Picker>
 
               <TextInput
                 style={{ margin: 20 }}
