@@ -5,6 +5,7 @@ import CameraScreen from "../CameraScreen";
 import VideoRecorder from "../VideoRecorder";
 import ViewRecording from "../VideoRecorder/ViewRecording";
 import RNCameraExample from "../RNCameraExample";
+import ViewRecordingWithStats from "../VideoRecorder/ViewRecordingWithStats";
 
 class HomeScreen extends React.Component {
   constructor(props) {
@@ -42,10 +43,10 @@ class HomeScreen extends React.Component {
             this.props.navigation.navigate("ImageCropper");
           }}
         /> */}
-        <Button
+        {/* <Button
           title="RNCamera Example"
           onPress={() => this.props.navigation.navigate("RNCameraExample")}
-        />
+        /> */}
       </View>
     );
   }
@@ -63,6 +64,9 @@ const AppNavigator = createStackNavigator({
   },
   ViewRecording: {
     screen: ViewRecording
+  },
+  ViewRecordingWithStats: {
+    screen: ViewRecordingWithStats
   },
   RNCameraExample: {
     screen: RNCameraExample

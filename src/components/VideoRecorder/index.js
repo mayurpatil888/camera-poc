@@ -1,10 +1,15 @@
 import React, { Component } from "react";
-import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
+import {
+  StyleSheet,
+  TouchableOpacity,
+  View,
+  Image,
+  ActivityIndicator,
+  Text
+} from "react-native";
 import { RNCamera } from "react-native-camera";
 import cameraIcon from "../../assets/camera.png";
 import ProgressBar from "react-native-progress/Bar";
-import RNThumbnail from "react-native-thumbnail";
-import { RNFFmpeg } from "react-native-ffmpeg";
 
 const PROGRESS_FACTOR = 0.01;
 
@@ -17,7 +22,8 @@ class VideoRecorder extends Component {
     this.state = {
       //   hasCameraPermission: true,//to explore
       type: RNCamera.Constants.Type.front,
-      progress: 0
+      progress: 0,
+      processing: false
     };
     this.camera = null;
     this.isRecording = false;
@@ -120,6 +126,23 @@ class VideoRecorder extends Component {
             );
           }}
         </RNCamera>
+        {this.state.processing && (
+          <View
+            style={{
+              position: "absolute",
+              top: 0,
+              bottom: 0,
+              left: 0,
+              right: 0,
+              alignSelf: "center",
+              justifyContent: "center",
+              alignItems: "center"
+            }}
+          >
+            <Text>Original video is uploading </Text>
+            <ActivityIndicator size="large" color="#00ff00" />
+          </View>
+        )}
       </View>
     );
   }
@@ -133,88 +156,14 @@ class VideoRecorder extends Component {
     }
   }
 
-  async uploadToS3(file, data) {
-    const oThis = this;
-    // from http://blog.rudikovac.com/react-native-upload-any-file-to-s3-with-a-presigned-url/
-    const xhr = new XMLHttpRequest();
+  getFormData(dataArray) {
     let formData = new FormData();
-    console.log("I am in uploadToS3");
 
-    let presignedurl = "https://s3.amazonaws.com/uassets.stagingpepo.com";
+    for (let i = 0; i < dataArray.length; i++) {
+      formData.append(dataArray[i]["key"], dataArray[i]["value"]);
+    }
 
-    xhr.open("POST", presignedurl);
-    xhr.onreadystatechange = function() {
-      console.log("I am her xhr.statuse", xhr.status, xhr.responseText);
-      if (xhr.readyState === 4) {
-        if (xhr.status === 204) {
-          alert("Video uploaded successfully to S3");
-          oThis.navigateToViewRecording(data);
-        } else {
-          alert("Could not upload file.");
-        }
-      }
-    };
-    // formData.append(
-    //   "key",
-    //   "d/ua/profile-images/df8c2b9e8b95b537249d47dcfaf6c73f-original.jpg"
-    // );
-    // formData.append("bucket", "uassets.stagingpepo.com");
-    // formData.append("X-Amz-Algorithm", "AWS4-HMAC-SHA256");
-    // formData.append(
-    //   "X-Amz-Credential",
-    //   "AKIAT7WAUYD3XA7WRZV4/20190702/us-east-1/s3/aws4_request"
-    // );
-    // formData.append("X-Amz-Date", "20190702T105856Z");
-
-    // formData.append(
-    //   "Policy",
-    //   "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0wNFQxMjo1ODo1NloiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6ImltYWdlL2pwZWcifSx7IkNvbnRlbnQtRGlzcG9zaXRpb24iOiJpbmxpbmUifSx7ImtleSI6ImQvdWEvcHJvZmlsZS1pbWFnZXMvZGY4YzJiOWU4Yjk1YjUzNzI0OWQ0N2RjZmFmNmM3M2Ytb3JpZ2luYWwuanBnIn0seyJDYWNoZS1Db250cm9sIjoicHVibGljLCBtYXgtYWdlPTMxNTM2MDAwMCJ9LHsieC1hbXotYWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDEwMjQsMTA0ODU3NjBdLHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy9kZjhjMmI5ZThiOTViNTM3MjQ5ZDQ3ZGNmYWY2YzczZi1vcmlnaW5hbC5qcGcifSx7ImJ1Y2tldCI6InVhc3NldHMuc3RhZ2luZ3BlcG8uY29tIn0seyJYLUFtei1BbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0seyJYLUFtei1DcmVkZW50aWFsIjoiQUtJQVQ3V0FVWUQzWEE3V1JaVjQvMjAxOTA3MDIvdXMtZWFzdC0xL3MzL2F3czRfcmVxdWVzdCJ9LHsiWC1BbXotRGF0ZSI6IjIwMTkwNzAyVDEwNTg1NloifV19"
-    // );
-
-    // formData.append(
-    //   "X-Amz-Signature",
-    //   "1eacc4cd844b79076ed608759c9972a07739b4ea150b638e7f065a39c0ada289"
-    // );
-    // formData.append("Content-Type", "image/jpeg");
-    // formData.append("Cache-Control", "public, max-age=315360000");
-
-    // formData.append("acl", "public-read");
-    // formData.append("Content-disposition", "inline");
-    // formData.append("file", file);
-
-    formData.append(
-      "key",
-      "d/ua/profile-images/120-7ac299b228c236b17dccd9d4ca8dd10d-original.mp4"
-    );
-    formData.append("bucket", "uassets.stagingpepo.com");
-    formData.append("X-Amz-Algorithm", "AWS4-HMAC-SHA256");
-    formData.append(
-      "X-Amz-Credential",
-      "AKIAT7WAUYD3XA7WRZV4/20190704/us-east-1/s3/aws4_request"
-    );
-    formData.append("X-Amz-Date", "20190704T073344Z");
-
-    formData.append(
-      "Policy",
-      "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0wOVQwNzozMzo0NFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJDYWNoZS1Db250cm9sIjoicHVibGljLCBtYXgtYWdlPTMxNTM2MDAwMCJ9LHsieC1hbXotYWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDEwMjQsODM4ODYwODBdLHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiWC1BbXotQWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LHsiWC1BbXotQ3JlZGVudGlhbCI6IkFLSUFUN1dBVVlEM1hBN1dSWlY0LzIwMTkwNzA0L3VzLWVhc3QtMS9zMy9hd3M0X3JlcXVlc3QifSx7IlgtQW16LURhdGUiOiIyMDE5MDcwNFQwNzMzNDRaIn1dfQ=="
-    );
-
-    formData.append(
-      "X-Amz-Signature",
-      "705e9161fb3278e0123a66281392ae5c0a94465a0dbf70b5a4c5b8ef49b72e6c"
-    );
-    formData.append("Content-Type", "video/mp4");
-    formData.append("Cache-Control", "public, max-age=315360000");
-
-    formData.append("acl", "public-read");
-    formData.append("Content-disposition", "inline");
-    formData.append("file", file);
-
-    xhr.setRequestHeader("X-Amz-ACL", "public-read");
-    // for text file: text/plain, for binary file: application/octet-stream
-    xhr.setRequestHeader("Content-Type", "multipart/form-data");
-
-    r = xhr.send(formData);
+    return formData;
   }
 
   initProgressBar() {
@@ -238,25 +187,17 @@ class VideoRecorder extends Component {
       console.log(data.uri);
       console.log("I am hereee");
       this.props.navigation.navigate("ViewRecording", {
-        uri: data.uri
-        //thumbnail: result.path
+        uri: data.uri,
+        inputUri: data.inputUri,
+        uploadTimeWithoutCompression: data.uploadTimeWithoutCompression
       });
-      // RNThumbnail.get(data.uri)
-      //   .then(result => {
-      //     console.log(result.path); // thumbnail path
-      //     console.log("I am hereee in RNThumbnail");
-      //     this.props.navigation.navigate("ViewRecording", {
-      //       uri: data.uri,
-      //       thumbnail: result.path
-      //     });
-      //   })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
     }
   };
 
   recordVideoAsync = async () => {
+    if (this.state.processing) {
+      return;
+    }
     if (!this.camera) return;
     if (!this.isRecording) {
       this.isRecording = true;
@@ -270,53 +211,112 @@ class VideoRecorder extends Component {
       this.initProgressBar();
       const data = await this.camera.recordAsync(options);
 
-      this.ffmgTest(data.uri);
-      // this.uploadToS3(
-      //   {
-      //     uri: data.uri,
-      //     type: "video/mp4",
-      //     name: "video.mp4"
-      //   },
-      //   data
-      // );
+      this.uploadOriginalToS3(
+        {
+          uri: data.uri,
+          type: "video/mp4",
+          name: "video.mp4"
+        },
+        data
+      );
     } else {
       this.stopRecording();
     }
   };
 
-  ffmgTest(uri) {
-    // RNFFmpeg.execute(
-    //   `-s 720X1280 -pix_fmt yuv420p -i ${uri} -vcodec h264  -crf 24 file:///data/user/0/com.testproject/cache/Camera/output${Date.now()}.mp4`
-    // )
-    let currentTime = Date.now();
-    RNFFmpeg.execute(
-      `-i ${uri} -s 720X1280 -pix_fmt yuv420p -vcodec h264 file:///data/user/0/com.testproject/cache/Camera/output_${currentTime}.mp4`
-    )
-      .then(result => {
-        console.log(
-          "-----------============================-------------result-------------============================"
-        );
-        console.log(result);
-        console.log(result.rc);
-        console.log(
-          "-----------============================-------------result-------------============================"
-        );
+  uploadOriginalToS3(file) {
+    const oThis = this;
+    const xhr = new XMLHttpRequest();
+    oThis.setState({ processing: true });
+    let presignedurl = "https://s3.amazonaws.com/uassets.stagingpepo.com";
 
-        this.uploadToS3({
-          uri: `file:///data/user/0/com.testproject/cache/Camera/output_${currentTime}.mp4`,
-          type: "video/mp4",
-          name: "video.mp4"
-        });
+    xhr.open("POST", presignedurl);
+    xhr.onreadystatechange = function() {
+      console.log("I am her xhr.statuse", xhr.status, xhr.responseText);
+      if (xhr.readyState === 4) {
+        if (xhr.status === 204) {
+          uploadCompletedOriginal = Date.now();
+          console.log("Original Upload completed successfully");
+          console.log(
+            "Time taken for upload",
+            uploadCompletedOriginal - uploadStartedOriginal
+          );
+          oThis.setState({ processing: false });
+          alert("Original Video uploaded successfully to S3");
 
-        console.log("-------------result-------------");
-      })
-      .catch(err => {
-        console.log("I n error", err);
-      });
+          oThis.navigateToViewRecording({
+            uri:
+              "http://uassets.stagingpepo.com.s3.amazonaws.com/d/ua/videos/1000-bd75608088ab537b568c92b1c84b5fcd-original.mp4",
+            inputUri: file.uri,
+            uploadTimeWithoutCompression:
+              uploadCompletedOriginal - uploadStartedOriginal
+          });
+        } else {
+          alert("Could not upload file.");
+        }
+      }
+    };
 
-    // RNFFmpeg.getMediaInformation(uri).then(info => {
-    //   console.log("Result: " + JSON.stringify(info));
-    // });
+    let formData = this.getFormData([
+      {
+        key: "key",
+        value: "d/ua/videos/1000-bd75608088ab537b568c92b1c84b5fcd-original.mp4"
+      },
+      {
+        key: "bucket",
+        value: "uassets.stagingpepo.com"
+      },
+      {
+        key: "X-Amz-Algorithm",
+        value: "AWS4-HMAC-SHA256"
+      },
+      {
+        key: "X-Amz-Credential",
+        value: "AKIAT7WAUYD3XA7WRZV4/20190705/us-east-1/s3/aws4_request"
+      },
+      {
+        key: "X-Amz-Date",
+        value: "20190705T133054Z"
+      },
+      {
+        key: "Policy",
+        value:
+          "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0xMFQxMzozMDo1NFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS92aWRlb3MvMTAwMC1iZDc1NjA4MDg4YWI1MzdiNTY4YzkyYjFjODRiNWZjZC1vcmlnaW5hbC5tcDQifSx7IkNhY2hlLUNvbnRyb2wiOiJwdWJsaWMsIG1heC1hZ2U9MzE1MzYwMDAwIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMTAyNCw4Mzg4NjA4MF0seyJrZXkiOiJkL3VhL3ZpZGVvcy8xMDAwLWJkNzU2MDgwODhhYjUzN2I1NjhjOTJiMWM4NGI1ZmNkLW9yaWdpbmFsLm1wNCJ9LHsiYnVja2V0IjoidWFzc2V0cy5zdGFnaW5ncGVwby5jb20ifSx7IlgtQW16LUFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IlgtQW16LUNyZWRlbnRpYWwiOiJBS0lBVDdXQVVZRDNYQTdXUlpWNC8yMDE5MDcwNS91cy1lYXN0LTEvczMvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1EYXRlIjoiMjAxOTA3MDVUMTMzMDU0WiJ9XX0="
+      },
+      {
+        key: "X-Amz-Signature",
+        value:
+          "145de568ebfe0058da8a8d5491d5429b3f9f717ae0a50605efc1762e1afb97cb"
+      },
+      {
+        key: "Content-Type",
+        value: "video/mp4"
+      },
+      {
+        key: "Cache-Control",
+        value: "public, max-age=315360000"
+      },
+      {
+        key: "acl",
+        value: "public-read"
+      },
+      {
+        key: "Content-disposition",
+        value: "inline"
+      },
+      {
+        key: "file",
+        value: file
+      }
+    ]);
+
+    xhr.setRequestHeader("X-Amz-ACL", "public-read");
+    // for text file: text/plain, for binary file: application/octet-stream
+    xhr.setRequestHeader("Content-Type", "multipart/form-data");
+    uploadStartedOriginal = Date.now();
+    console.log("Original Upload started at", uploadStartedOriginal);
+    console.log("Original formdata", formData);
+    r = xhr.send(formData);
   }
 }
 

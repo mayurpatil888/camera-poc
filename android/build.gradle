@@ -22,16 +22,16 @@ buildscript {
         // in the individual module build.gradle files
     }
 }
-// subprojects { subproject ->
-//    afterEvaluate{
-//        if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
-//            android {
-//                compileSdkVersion 28
-//                buildToolsVersion "28.0.3"
-//            }
-//        }
-//    }
-// }
+subprojects { subproject ->
+   afterEvaluate{
+       if((subproject.plugins.hasPlugin('android') || subproject.plugins.hasPlugin('android-library'))) {
+           android {
+               compileSdkVersion 28
+               buildToolsVersion "28.0.3"
+           }
+       }
+   }
+}
 allprojects {
     repositories {
         mavenLocal()
