@@ -131,6 +131,12 @@ class ViewRecordingWithStats extends PureComponent {
                 Input file size (in KB):
                 {this.props.navigation.getParam("inputFileSize")}
               </Text>
+              <Button
+                onPress={() => {
+                  this.setState({ showModal: false });
+                }}
+                title="Go Back"
+              />
             </View>
           </Modal>
         )}

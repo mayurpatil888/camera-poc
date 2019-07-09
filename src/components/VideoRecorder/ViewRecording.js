@@ -18,6 +18,8 @@ import { TextInput } from "react-native-gesture-handler";
 import ViewRecordingWithStats from "./ViewRecordingWithStats";
 var RNFetchBlob = require("rn-fetch-blob").default;
 
+import { SafeAreaView } from "react-navigation";
+
 const PROGRESS_FACTOR = 0.01;
 
 // create a component
@@ -157,7 +159,7 @@ class ViewRecording extends PureComponent {
 
                 oThis.props.navigation.navigate("ViewRecordingWithStats", {
                   uri:
-                    "http://uassets.stagingpepo.com.s3.amazonaws.com/d/ua/profile-images/120-7ac299b228c236b17dccd9d4ca8dd10d-original.mp4",
+                    "http://s3.amazonaws.com/uassets.stagingpepo.com/d/ua/videos/1000-72ad32076230543b150194a3414ba7f9-original.mp4",
                   uploadTimeWithEncoding: uploadCompletedAt - uploadStartedAt,
                   timeForCompression:
                     comressionFinishedAt - compreessionStarted,
@@ -183,8 +185,7 @@ class ViewRecording extends PureComponent {
     let formData = this.getFormData([
       {
         key: "key",
-        value:
-          "d/ua/profile-images/120-7ac299b228c236b17dccd9d4ca8dd10d-original.mp4"
+        value: "d/ua/videos/1000-72ad32076230543b150194a3414ba7f9-original.mp4"
       },
       {
         key: "bucket",
@@ -196,21 +197,21 @@ class ViewRecording extends PureComponent {
       },
       {
         key: "X-Amz-Credential",
-        value: "AKIAT7WAUYD3XA7WRZV4/20190704/us-east-1/s3/aws4_request"
+        value: "AKIAT7WAUYD3XA7WRZV4/20190709/us-east-1/s3/aws4_request"
       },
       {
         key: "X-Amz-Date",
-        value: "20190704T073344Z"
+        value: "20190709T074646Z"
       },
       {
         key: "Policy",
         value:
-          "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0wOVQwNzozMzo0NFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJDYWNoZS1Db250cm9sIjoicHVibGljLCBtYXgtYWdlPTMxNTM2MDAwMCJ9LHsieC1hbXotYWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LFsiY29udGVudC1sZW5ndGgtcmFuZ2UiLDEwMjQsODM4ODYwODBdLHsia2V5IjoiZC91YS9wcm9maWxlLWltYWdlcy8xMjAtN2FjMjk5YjIyOGMyMzZiMTdkY2NkOWQ0Y2E4ZGQxMGQtb3JpZ2luYWwubXA0In0seyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiWC1BbXotQWxnb3JpdGhtIjoiQVdTNC1ITUFDLVNIQTI1NiJ9LHsiWC1BbXotQ3JlZGVudGlhbCI6IkFLSUFUN1dBVVlEM1hBN1dSWlY0LzIwMTkwNzA0L3VzLWVhc3QtMS9zMy9hd3M0X3JlcXVlc3QifSx7IlgtQW16LURhdGUiOiIyMDE5MDcwNFQwNzMzNDRaIn1dfQ=="
+          "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0xOVQwNzo0Njo0NloiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS92aWRlb3MvMTAwMC03MmFkMzIwNzYyMzA1NDNiMTUwMTk0YTM0MTRiYTdmOS1vcmlnaW5hbC5tcDQifSx7IkNhY2hlLUNvbnRyb2wiOiJwdWJsaWMsIG1heC1hZ2U9MzE1MzYwMDAwIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMTAyNCw4Mzg4NjA4MF0seyJrZXkiOiJkL3VhL3ZpZGVvcy8xMDAwLTcyYWQzMjA3NjIzMDU0M2IxNTAxOTRhMzQxNGJhN2Y5LW9yaWdpbmFsLm1wNCJ9LHsiYnVja2V0IjoidWFzc2V0cy5zdGFnaW5ncGVwby5jb20ifSx7IlgtQW16LUFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IlgtQW16LUNyZWRlbnRpYWwiOiJBS0lBVDdXQVVZRDNYQTdXUlpWNC8yMDE5MDcwOS91cy1lYXN0LTEvczMvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1EYXRlIjoiMjAxOTA3MDlUMDc0NjQ2WiJ9XX0="
       },
       {
         key: "X-Amz-Signature",
         value:
-          "705e9161fb3278e0123a66281392ae5c0a94465a0dbf70b5a4c5b8ef49b72e6c"
+          "c9a42a70732fd5deb130f54df9f51547772b4d7e7a815c47b3e4310b0b9714dd"
       },
       {
         key: "Content-Type",
@@ -297,6 +298,7 @@ class ViewRecording extends PureComponent {
           </View>
         )}
         <Button
+          style={{ marginBottom: 40, position: "absolute" }}
           title="Compress"
           onPress={() => {
             if (this.state.processing) return;
@@ -311,52 +313,64 @@ class ViewRecording extends PureComponent {
               this.setState({ showModal: false });
             }}
           >
-            <TextInput
-              onChangeText={screenSize => this.setState({ screenSize })}
-              placeholder="Screen size"
-              value={this.state.screenSize}
-            />
-
-            <TextInput
-              onChangeText={pixelFormat => this.setState({ pixelFormat })}
-              placeholder="Pixel Format"
-              value={this.state.pixelFormat}
-            />
-
-            {/* <Picker
-              selectedValue={this.state.preset}
-              style={{ height: 50, width: 100 }}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({ preset: itemValue })
-              }
-            >
-              <Picker.Item label="Ultrafast" value="ultrafast" />
-              <Picker.Item label="Superfast" value="superfast" />
-              <Picker.Item label="veryfast" value="veryfast" />
-              <Picker.Item label="faster" value="faster" />
-              <Picker.Item label="fast" value="fast" />
-              <Picker.Item label="medium" value="medium" />
-              <Picker.Item label="slow" value="slow" />
-              <Picker.Item label="slower" value="slower" />
-              <Picker.Item label="Superfast" value="superfast" />
-            </Picker> */}
-
-            <TextInput
-              onChangeText={preset => this.setState({ preset })}
-              placeholder="Preset"
-              value={this.state.preset}
-            />
-            <TextInput
-              placeholder="crf"
-              value={this.state.crf}
-              onChangeText={crf => this.setState({ crf })}
-            />
-            <Button
-              title="Start compression"
-              onPress={() => {
-                this.startCompression();
+            <View
+              style={{
+                flex: 1,
+                alignContent: "center",
+                justifyContent: "center"
               }}
-            />
+            >
+              <TextInput
+                style={{ margin: 20 }}
+                onChangeText={screenSize => this.setState({ screenSize })}
+                placeholder="Screen size"
+                value={this.state.screenSize}
+              />
+
+              <TextInput
+                style={{ margin: 20 }}
+                onChangeText={pixelFormat => this.setState({ pixelFormat })}
+                placeholder="Pixel Format"
+                value={this.state.pixelFormat}
+              />
+
+              {/* <Picker
+                selectedValue={this.state.preset}
+                style={{ height: 50, width: 100 }}
+                onValueChange={(itemValue, itemIndex) =>
+                  this.setState({ preset: itemValue })
+                }
+              >
+                <Picker.Item label="Ultrafast" value="ultrafast" />
+                <Picker.Item label="Superfast" value="superfast" />
+                <Picker.Item label="veryfast" value="veryfast" />
+                <Picker.Item label="faster" value="faster" />
+                <Picker.Item label="fast" value="fast" />
+                <Picker.Item label="medium" value="medium" />
+                <Picker.Item label="slow" value="slow" />
+                <Picker.Item label="slower" value="slower" />
+                <Picker.Item label="Superfast" value="superfast" />
+              </Picker> */}
+
+              <TextInput
+                style={{ margin: 20 }}
+                onChangeText={preset => this.setState({ preset })}
+                placeholder="Preset"
+                value={this.state.preset}
+              />
+              <TextInput
+                style={{ margin: 20 }}
+                placeholder="crf"
+                value={this.state.crf}
+                onChangeText={crf => this.setState({ crf })}
+              />
+              <Button
+                title="Start compression"
+                onPress={() => {
+                  this.startCompression();
+                }}
+              />
+            </View>
           </Modal>
         )}
 
@@ -378,7 +392,9 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#2c3e50",
     padding: 0,
-    margin: 0
+    margin: 0,
+    alignContent: "center",
+    justifyContent: "center"
   },
   backgroundVideo: {
     flex: 1,

@@ -246,7 +246,7 @@ class VideoRecorder extends Component {
 
           oThis.navigateToViewRecording({
             uri:
-              "http://uassets.stagingpepo.com.s3.amazonaws.com/d/ua/videos/1000-bd75608088ab537b568c92b1c84b5fcd-original.mp4",
+              "http://s3.amazonaws.com/uassets.stagingpepo.com/d/ua/videos/1000-17965891e38cb822a85903576d275a5a-original.mp4",
             inputUri: file.uri,
             uploadTimeWithoutCompression:
               uploadCompletedOriginal - uploadStartedOriginal
@@ -260,7 +260,7 @@ class VideoRecorder extends Component {
     let formData = this.getFormData([
       {
         key: "key",
-        value: "d/ua/videos/1000-bd75608088ab537b568c92b1c84b5fcd-original.mp4"
+        value: "d/ua/videos/1000-17965891e38cb822a85903576d275a5a-original.mp4"
       },
       {
         key: "bucket",
@@ -272,21 +272,21 @@ class VideoRecorder extends Component {
       },
       {
         key: "X-Amz-Credential",
-        value: "AKIAT7WAUYD3XA7WRZV4/20190705/us-east-1/s3/aws4_request"
+        value: "AKIAT7WAUYD3XA7WRZV4/20190709/us-east-1/s3/aws4_request"
       },
       {
         key: "X-Amz-Date",
-        value: "20190705T133054Z"
+        value: "20190709T074757Z"
       },
       {
         key: "Policy",
         value:
-          "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0xMFQxMzozMDo1NFoiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS92aWRlb3MvMTAwMC1iZDc1NjA4MDg4YWI1MzdiNTY4YzkyYjFjODRiNWZjZC1vcmlnaW5hbC5tcDQifSx7IkNhY2hlLUNvbnRyb2wiOiJwdWJsaWMsIG1heC1hZ2U9MzE1MzYwMDAwIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMTAyNCw4Mzg4NjA4MF0seyJrZXkiOiJkL3VhL3ZpZGVvcy8xMDAwLWJkNzU2MDgwODhhYjUzN2I1NjhjOTJiMWM4NGI1ZmNkLW9yaWdpbmFsLm1wNCJ9LHsiYnVja2V0IjoidWFzc2V0cy5zdGFnaW5ncGVwby5jb20ifSx7IlgtQW16LUFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IlgtQW16LUNyZWRlbnRpYWwiOiJBS0lBVDdXQVVZRDNYQTdXUlpWNC8yMDE5MDcwNS91cy1lYXN0LTEvczMvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1EYXRlIjoiMjAxOTA3MDVUMTMzMDU0WiJ9XX0="
+          "eyJleHBpcmF0aW9uIjoiMjAxOS0wNy0xOVQwNzo0Nzo1N1oiLCJjb25kaXRpb25zIjpbeyJidWNrZXQiOiJ1YXNzZXRzLnN0YWdpbmdwZXBvLmNvbSJ9LHsiYWNsIjoicHVibGljLXJlYWQifSx7IkNvbnRlbnQtVHlwZSI6InZpZGVvL21wNCJ9LHsiQ29udGVudC1EaXNwb3NpdGlvbiI6ImlubGluZSJ9LHsia2V5IjoiZC91YS92aWRlb3MvMTAwMC0xNzk2NTg5MWUzOGNiODIyYTg1OTAzNTc2ZDI3NWE1YS1vcmlnaW5hbC5tcDQifSx7IkNhY2hlLUNvbnRyb2wiOiJwdWJsaWMsIG1heC1hZ2U9MzE1MzYwMDAwIn0seyJ4LWFtei1hbGdvcml0aG0iOiJBV1M0LUhNQUMtU0hBMjU2In0sWyJjb250ZW50LWxlbmd0aC1yYW5nZSIsMTAyNCw4Mzg4NjA4MF0seyJrZXkiOiJkL3VhL3ZpZGVvcy8xMDAwLTE3OTY1ODkxZTM4Y2I4MjJhODU5MDM1NzZkMjc1YTVhLW9yaWdpbmFsLm1wNCJ9LHsiYnVja2V0IjoidWFzc2V0cy5zdGFnaW5ncGVwby5jb20ifSx7IlgtQW16LUFsZ29yaXRobSI6IkFXUzQtSE1BQy1TSEEyNTYifSx7IlgtQW16LUNyZWRlbnRpYWwiOiJBS0lBVDdXQVVZRDNYQTdXUlpWNC8yMDE5MDcwOS91cy1lYXN0LTEvczMvYXdzNF9yZXF1ZXN0In0seyJYLUFtei1EYXRlIjoiMjAxOTA3MDlUMDc0NzU3WiJ9XX0="
       },
       {
         key: "X-Amz-Signature",
         value:
-          "145de568ebfe0058da8a8d5491d5429b3f9f717ae0a50605efc1762e1afb97cb"
+          "6ace8aa4a45879b8cfe99f2ce3de26cd8afcf6c47e88becc4592314be9ec160f"
       },
       {
         key: "Content-Type",
